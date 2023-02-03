@@ -7,7 +7,7 @@ Add-AppPackage -Path "$PSScriptRoot/DesktopAppInstaller.msixbundle"
 #Font for oh my posh
 Start-BitsTransfer -Source https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Meslo.zip -Destination "$PSScriptRoot/Meslo.zip"
 Expand-Archive "$PSScriptRoot/Meslo.zip" $PSScriptRoot
-
+##donsnot worke
 Write-Output "Install fonts"
 $fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
 foreach ($file in gci *.ttf)
@@ -20,7 +20,7 @@ foreach ($file in gci *.ttf)
 }
 cp *.ttf c:\windows\fonts\
 
-winget update Microsoft.WindowsTerminal
+winget update Microsoft.WindowsTerminal --accept-package-agreements --accept-source-agreements
 winget install --id=Mozilla.Firefox.ESR  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Microsoft.VisualStudioCode  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Git.Git  -e -h --accept-package-agreements --accept-source-agreements
@@ -32,9 +32,10 @@ Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Pe
 
 stop-process -name explorer -force
 
+Copy-Item .\Microsoft.PowerShell_profile.ps1 $ENv:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
 
 
-
+Copy-Item .\settings.json $ENv:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 
 
 Read-Host -Prompt "Press any key to continue..."
