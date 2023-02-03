@@ -30,7 +30,7 @@ winget install --id=JanDeDobbeleer.OhMyPosh  -e -h --accept-package-agreements -
 New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name TaskbarAl -Value 0 -PropertyType DWORD -Force
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name SystemUsesLightTheme -Value 0 -Force
 
-stop-process -name explorer –force
+stop-process -name explorer -force
 
 
 
