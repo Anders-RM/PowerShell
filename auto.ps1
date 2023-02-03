@@ -20,16 +20,17 @@ foreach ($file in gci *.ttf)
 }
 cp *.ttf c:\windows\fonts\
 
+winget install --id=Microsoft.WindowsTerminal  -e
 winget install --id=Mozilla.Firefox.ESR  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Microsoft.VisualStudioCode  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Git.Git  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=7zip.7zip  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=JanDeDobbeleer.OhMyPosh  -e -h --accept-package-agreements --accept-source-agreements
 
-New-ItemProperty -Path HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name TaskbarAl -Value 0 -PropertyType DWORD -Force
-Set-ItemProperty -Path HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name SystemUsesLightTheme -Value 0 -Force
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name TaskbarAl -Value 0 -PropertyType DWORD -Force
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name SystemUsesLightTheme -Value 0 -Force
 
-
+stop-process -name explorer –force
 
 
 
