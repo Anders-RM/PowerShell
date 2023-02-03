@@ -6,26 +6,43 @@ Add-AppxPackage -Path "$PSScriptRoot/Microsoft.VCLibs.140.00.UWPDesktop_14.0.307
 Add-AppPackage -Path "$PSScriptRoot/DesktopAppInstaller.msixbundle"
 #Font for oh my posh
 Start-BitsTransfer -Source https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Meslo.zip -Destination "$PSScriptRoot/Meslo.zip"
-Expand-Archive "$PSScriptRoot/Meslo.zip" $PSScriptRoot
-##dons not worke
-Write-Output "Install fonts"
-$fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
-foreach ($file in gci *.ttf)
-{
-    $fileName = $file.Name
-    if (-not(Test-Path -Path "C:\Windows\fonts\$fileName" )) {
-        echo $fileName
-        dir $file | %{ $fonts.CopyHere($_.fullname) }
-    }
-}
-cp *.ttf c:\windows\fonts\
+Expand-Archive "$PSScriptRoot/Meslo.zip" $PSScriptRoot/Meslo
 
-winget update Microsoft.WindowsTerminal --accept-package-agreements --accept-source-agreements
+$FONTS = 0x14
+$Path="$PSScriptRoot\fonts-to-be-installed"
+$objShell = New-Object -ComObject Shell.Application
+$objFolder = $objShell.Namespace($FONTS)
+$Fontdir = dir $Path
+foreach($File in $Fontdir) {
+if(!($file.name -match "pfb$"))
+{
+$try = $true
+$installedFonts = @(Get-ChildItem c:\windows\fonts | Where-Object {$_.PSIsContainer -eq $false} | Select-Object basename)
+$name = $File.baseName
+
+foreach($font in $installedFonts)
+{
+$font = $font -replace "_", ""
+$name = $name -replace "_", ""
+if($font -match $name)
+{
+$try = $false
+}
+}
+if($try)
+{
+$objFolder.CopyHere($File.fullname)
+}
+}
+}
+
+winget update --id=Microsoft.WindowsTerminal --accept-package-agreements --accept-source-agreements
 winget install --id=Mozilla.Firefox.ESR  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Microsoft.VisualStudioCode  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Git.Git  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=7zip.7zip  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=JanDeDobbeleer.OhMyPosh  -e -h --accept-package-agreements --accept-source-agreements
+winget upgrade --all
 
 New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name TaskbarAl -Value 0 -PropertyType DWORD -Force
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name SystemUsesLightTheme -Value 0 -Force
