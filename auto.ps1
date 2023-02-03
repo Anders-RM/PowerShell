@@ -12,31 +12,27 @@ Remove-Item -Path "$PSScriptRoot/Meslo/readme.md"
 
 
 $FONTS = 0x14
-$Path="$PSScriptRoot\Meslo"
+$Path = "$PSScriptRoot\Meslo"
 $objShell = New-Object -ComObject Shell.Application
 $objFolder = $objShell.Namespace($FONTS)
 $Fontdir = dir $Path
-foreach($File in $Fontdir) {
-if(!($file.name -match "pfb$"))
-{
-$try = $true
-$installedFonts = @(Get-ChildItem c:\windows\fonts | Where-Object {$_.PSIsContainer -eq $false} | Select-Object basename)
-$name = $File.baseName
+foreach ($File in $Fontdir) {
+    if (!($file.name -match "pfb$")) {
+        $try = $true
+        $installedFonts = @(Get-ChildItem c:\windows\fonts | Where-Object { $_.PSIsContainer -eq $false } | Select-Object basename)
+        $name = $File.baseName
 
-foreach($font in $installedFonts)
-{
-$font = $font -replace "_", ""
-$name = $name -replace "_", ""
-if($font -match $name)
-{
-$try = $false
-}
-}
-if($try)
-{
-$objFolder.CopyHere($File.fullname)
-}
-}
+        foreach ($font in $installedFonts) {
+            $font = $font -replace "_", ""
+            $name = $name -replace "_", ""
+            if ($font -match $name) {
+                $try = $false
+            }
+        }
+        if ($try) {
+            $objFolder.CopyHere($File.fullname)
+        }
+    }
 }
 
 winget update --id=Microsoft.WindowsTerminal --accept-package-agreements --accept-source-agreements
@@ -57,6 +53,3 @@ stop-process -name explorer -force
 New-Item $ENV:USERPROFILE\Documents\WindowsPowerShell -ItemType Directory
 Move-Item $PSScriptRoot\Microsoft.PowerShell_profile.ps1 $ENV:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
 Copy-Item $PSScriptRoot\settings.json $ENV:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json  -Force
-
-
-Read-Host -Prompt "Press any key to continue..."
