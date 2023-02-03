@@ -20,7 +20,7 @@ foreach ($file in gci *.ttf)
 }
 cp *.ttf c:\windows\fonts\
 
-winget install --id=Microsoft.WindowsTerminal  -e
+winget update Microsoft.WindowsTerminal
 winget install --id=Mozilla.Firefox.ESR  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Microsoft.VisualStudioCode  -e -h --accept-package-agreements --accept-source-agreements
 winget install --id=Git.Git  -e -h --accept-package-agreements --accept-source-agreements
