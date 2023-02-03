@@ -7,6 +7,9 @@ Add-AppPackage -Path "$PSScriptRoot/DesktopAppInstaller.msixbundle"
 #Font for oh my posh
 Start-BitsTransfer -Source https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Meslo.zip -Destination "$PSScriptRoot/Meslo.zip"
 Expand-Archive  -Path "$PSScriptRoot/Meslo.zip" -DestinationPath "$PSScriptRoot/Meslo"
+Remove-Item -Path "$PSScriptRoot/Meslo/LICENSE.txt"
+Remove-Item -Path "$PSScriptRoot/Meslo/readme.md"
+
 
 $FONTS = 0x14
 $Path="$PSScriptRoot\Meslo"
@@ -46,6 +49,8 @@ winget upgrade --all
 
 New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name TaskbarAl -Value 0 -PropertyType DWORD -Force
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize -Name SystemUsesLightTheme -Value 0 -Force
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name HideFileExt -Value 0 -Force
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1 -Force
 
 stop-process -name explorer -force
 
