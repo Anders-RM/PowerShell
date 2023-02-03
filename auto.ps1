@@ -32,10 +32,9 @@ Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Pe
 
 stop-process -name explorer -force
 
+New-Item $ENV:USERPROFILE\Documents\WindowsPowerShell -ItemType Directory
 Move-Item $PSScriptRoot\Microsoft.PowerShell_profile.ps1 $ENV:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
-
-
-Move-Item $PSScriptRoot\settings.json $ENV:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+Copy-Item $PSScriptRoot\settings.json $ENV:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json  -Force
 
 
 Read-Host -Prompt "Press any key to continue..."
