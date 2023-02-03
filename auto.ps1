@@ -7,7 +7,7 @@ Add-AppPackage -Path "$PSScriptRoot/DesktopAppInstaller.msixbundle"
 #Font for oh my posh
 Start-BitsTransfer -Source https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Meslo.zip -Destination "$PSScriptRoot/Meslo.zip"
 Expand-Archive "$PSScriptRoot/Meslo.zip" $PSScriptRoot
-##donsnot worke
+##dons not worke
 Write-Output "Install fonts"
 $fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
 foreach ($file in gci *.ttf)
@@ -32,10 +32,10 @@ Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Pe
 
 stop-process -name explorer -force
 
-Copy-Item .\Microsoft.PowerShell_profile.ps1 $ENv:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
+Move-Item $PSScriptRoot\Microsoft.PowerShell_profile.ps1 $ENV:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
 
 
-Copy-Item .\settings.json $ENv:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+Move-Item $PSScriptRoot\settings.json $ENV:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
 
 
 Read-Host -Prompt "Press any key to continue..."
