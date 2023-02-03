@@ -6,10 +6,10 @@ Add-AppxPackage -Path "$PSScriptRoot/Microsoft.VCLibs.140.00.UWPDesktop_14.0.307
 Add-AppPackage -Path "$PSScriptRoot/DesktopAppInstaller.msixbundle"
 #Font for oh my posh
 Start-BitsTransfer -Source https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Meslo.zip -Destination "$PSScriptRoot/Meslo.zip"
-Expand-Archive "$PSScriptRoot/Meslo.zip" $PSScriptRoot/Meslo
+Expand-Archive  -Path "$PSScriptRoot/Meslo.zip" -DestinationPath "$PSScriptRoot/Meslo"
 
 $FONTS = 0x14
-$Path="$PSScriptRoot\fonts-to-be-installed"
+$Path="$PSScriptRoot\Meslo"
 $objShell = New-Object -ComObject Shell.Application
 $objFolder = $objShell.Namespace($FONTS)
 $Fontdir = dir $Path
