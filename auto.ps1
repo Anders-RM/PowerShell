@@ -50,6 +50,8 @@ Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\
 
 stop-process -name explorer -force
 
+ssh-keygen -q -t rsa -N '@Ndersraeder' -f ~/.ssh/id_rsa -C "andersrm1808@gmial.com" 
+
 New-Item $ENV:USERPROFILE\Documents\WindowsPowerShell -ItemType Directory
 Move-Item $PSScriptRoot\Microsoft.PowerShell_profile.ps1 $ENV:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1 
 Copy-Item $PSScriptRoot\settings.json $ENV:USERPROFILE\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json  -Force
